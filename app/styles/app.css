@@ -6,5 +6,10 @@
     width: 100vw;
     height: 100vh;
     max-width: 100%;
+    position: relative;
   }
+}
+
+@utility module {
+  @apply w-screen h-screen max-w-full absolute top-0 left-0;
 }
