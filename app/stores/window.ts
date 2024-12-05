@@ -78,6 +78,7 @@ export class WindowStore {
 
   private _silentlySetState(id: string, state: WindowState) {
     const idx = this.windows.findIndex(({ id: _id }) => _id === id);
+    if (idx < 0) return;
     this.windows[idx][internalStateRefSymbol] = { ...state };
   }
 
