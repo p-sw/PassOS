@@ -14,7 +14,7 @@ export function Window({
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.5 }}
-      style={{ top: state.y, left: state.x }}
+      style={{ top: state.y, left: state.x, zIndex: state.z }}
       className="bg-black/50 rounded-xl min-w-xs min-h-60 absolute translate-x-[50%] translate-y-[50%] outline-black outline-solid outline-0 hover:outline-2 transition-[outline]"
       onMouseOver={() =>
         updateState((p) => {
