@@ -39,6 +39,7 @@ export function Window({
         if (e.button === 0) {
           windowStore.updateState(id, (p) => {
             p.isPressed = true;
+            p.z = ++windowStore.baseZ;
           });
         }
       }}
