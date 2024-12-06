@@ -1,8 +1,5 @@
 import { ReactNode } from "@tanstack/react-router";
 import { motion } from "motion/react";
-import { useContext } from "react";
-import { ClickContext } from "~/context/click.context";
-import { KeyContext } from "~/context/key.context";
 import { useWindowState, WindowContext, windowStore } from "~/stores/window";
 
 export function Window({
@@ -10,8 +7,6 @@ export function Window({
   children,
   ...ctx
 }: WindowContext & { children?: ReactNode }) {
-  const keys = useContext(KeyContext);
-  const clicks = useContext(ClickContext);
   const [state, updateState] = useWindowState(id);
 
   return (
