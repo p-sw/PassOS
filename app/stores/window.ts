@@ -98,6 +98,13 @@ export class WindowStore {
     this.notifyUpdate(id);
   }
 
+  updateStates(ids: string[], updator: (p: WindowState) => void) {
+    for (const id of ids) {
+      this._silentlyUpdateState(id, updator);
+      this.notifyUpdate(id);
+    }
+  }
+
   subscribe(
     notifyId: string | typeof globalWindowListenersSymbol,
     listener: () => void,
