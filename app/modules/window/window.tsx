@@ -29,13 +29,28 @@ export function Window({
       onMouseOut={() =>
         updateState((p) => {
           p.isHovered = false;
+          p.isPressed = false;
         })
       }
       onMouseMove={(e) => {
-        if (keys.specials.ctrl && clicks.left) {
+        if (state.isPressed) {
           windowStore.updateState(id, (p) => {
             p.x = p.x + e.movementX;
             p.y = p.y + e.movementY;
+          });
+        }
+      }}
+      onMouseDown={(e) => {
+        if (e.button === 0) {
+          windowStore.updateState(id, (p) => {
+            p.isPressed = true;
+          });
+        }
+      }}
+      onMouseUp={(e) => {
+        if (e.button === 0) {
+          windowStore.updateState(id, (p) => {
+            p.isPressed = false;
           });
         }
       }}
