@@ -16,14 +16,8 @@ interface WindowState {
   isPressed: boolean;
   x: number;
   y: number;
+  z: number;
 }
-
-const defaultWindowState = (ctx: WindowContext): WindowState => ({
-  isHovered: false,
-  isPressed: false,
-  x: ctx.initialX ?? window.innerWidth / 2,
-  y: ctx.initialY ?? window.innerHeight / 2,
-});
 
 export type WindowInternalContext = WindowContext & {
   [internalStateRefSymbol]: WindowState;
@@ -32,6 +26,7 @@ export type WindowInternalContext = WindowContext & {
 export type WindowStoreEvent = "push" | "pop";
 export class WindowStore {
   _id: number = 0;
+  baseZ: number = 0;
   windows: WindowInternalContext[] = [];
   undeads: WindowInternalContext[] = [];
   listeners: Record<
@@ -41,6 +36,16 @@ export class WindowStore {
     [globalWindowListenersSymbol]: [],
   };
 
+  private defaultWindowState(ctx: WindowContext): WindowState {
+    return {
+      isHovered: false,
+      isPressed: false,
+      x: ctx.initialX ?? window.innerWidth / 2,
+      y: ctx.initialY ?? window.innerHeight / 2,
+      z: ++this.baseZ,
+    };
+  }
+
   private _silentlyPushWindow(ctx: Omit<WindowContext, "id">) {
     const id = (++this._id).toString();
     const completeCtx = { ...ctx, id };
@@ -48,7 +53,7 @@ export class WindowStore {
       ...this.windows,
       {
         ...completeCtx,
-        [internalStateRefSymbol]: defaultWindowState(completeCtx),
+        [internalStateRefSymbol]: this.defaultWindowState(completeCtx),
       },
     ];
     return this._id;
